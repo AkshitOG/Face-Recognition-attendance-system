@@ -1,0 +1,27 @@
+body {
+    background-color: black;
+    margin: 0;
+}
+
+.main_container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    padding-left: 60px;
+}
+
+.camera_box {
+    border-radius: 20px;
+    width: 640px;
+    height: 480px;
+    border: 4px solid purple;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(128, 0, 128, 0.5);
+}
+
+.camera_box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
