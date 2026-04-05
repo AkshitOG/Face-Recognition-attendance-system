@@ -17,6 +17,9 @@ cascade_path = os.path.join(
 face_cascade = cv2.CascadeClassifier(cascade_path)
 
 def camera_on():
+    if not camera.isOpened():
+        raise RuntimeError("Camera not Accessible.")
+    
     while True:
         success, frame = camera.read()
         if not success:
@@ -26,8 +29,8 @@ def camera_on():
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-        for (x,y,w_box,h_box) in faces:
-            cv2.rectangle(frame, (x,y), (x+w_box, y+h_box), (0,255,0), 2)
+        for (x,y,w,h) in faces:
+            cv2.rectangle(frame, (x,y), (x+w, y+h), (0,255,0), 2)
         
 
         ret, buffer = cv2.imencode('.jpg', frame)
