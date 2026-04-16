@@ -10,12 +10,11 @@ venv/
 instance/
 *.db
 
-.DS_Store
-Thumbs.db
-
 .vscode/
 
 .env
 
 ImgDatabase/*
 !ImgDatabase/.gitkeep
+
+ESP32/ESP32_code/wifi_config.h
