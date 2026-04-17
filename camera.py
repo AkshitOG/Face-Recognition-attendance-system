@@ -7,7 +7,9 @@ warnings.filterwarnings("ignore")
 from db_config import mark_attendance
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+print("Starting Camera")
 camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+print("Camera ON")
 camera.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
 #https://github.com/opencv/opencv/tree/4.x/data/haarcascades
@@ -46,11 +48,13 @@ def camera_on(flaskapp):
                 face_img = frame[y:y+h, x:x+w]
                 if frame_count%30 == 0 and w > 80 and h > 80:
                     try:
+                        print("Finding Face")
                         result= DeepFace.find(
                             img_path=face_img,
                             db_path=os.path.join(BASE_DIR, "ImgDatabase"),
                             enforce_detection=False
                             )
+                        print("Search finish")
                         if len(result[0]) > 0 and face_img.shape[1]>0:
                             last_known_name = os.path.basename(result[0].iloc[0]['identity']).split('.')[0]
                             #kept 60 for 1 minute, just for testing later it will be changed.
@@ -74,4 +78,4 @@ def camera_on(flaskapp):
                     b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n'))
             time.sleep(0.03)
     finally:
-        camera.release()
+        pass

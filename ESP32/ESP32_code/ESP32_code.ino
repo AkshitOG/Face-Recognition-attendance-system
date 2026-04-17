@@ -4,6 +4,10 @@
 #include "wifi_config.h" // ssid name and password are saved in this file.
 
 void display(int n, int k);
+void clearDisplay();
+
+int seg1[7] = {2,4,5,18,19,21,22};     // display 1
+int seg2[7] = {23,25,26,27,32,33,13};  // display 2
 
 
 void setup() {
@@ -20,11 +24,13 @@ void setup() {
   }
   Serial.println("\nConnected");
 
-  for (int i = 0; i<=13; i++)
+  for (int i = 0; i<7; i++)
   {
-    pinMode(i,OUTPUT);
+    pinMode(seg1[i],OUTPUT);
+    pinMode(seg2[i],OUTPUT);
   }
 
+  clearDisplay();
 }
 
 int total = 0;
@@ -50,121 +56,126 @@ void loop() {
       http.end();
     }
   }
-    //Display consists of 2 7-Segment displays, so displaying only 2 digits.
-    int a = total%10;
-    int b = (total/10)%10;
-    
-    display(0,a);
-    delay(5); //avoiding flickering
-    display(1, b);
-    delay(5); //avoid filckering
+    //Display consists of 2 7-Segment displays, so displaying only 2 digits using Multiplexing.
+    int ones = total%10;
+    int tens = (total/10)%10;
+    for(int t = 0; t < 50; t++) {
 
+    display(0, ones);   // display 1
+    delay(2);
+    clearDisplay();
+
+    display(1, tens);   // display 2
+    delay(2);
+    clearDisplay();
+  }
 }
 
 void display(int n, int k)
 {
-  int i = 0;
-  if (n == 1) i = 7; 
+  int* seg = (n == 0) ? seg1 : seg2;
+
   switch(k)
   {
+    case 0:
+      digitalWrite(seg[0],LOW);
+      digitalWrite(seg[1],LOW);
+      digitalWrite(seg[2],LOW);
+      digitalWrite(seg[3],LOW);
+      digitalWrite(seg[4],LOW);
+      digitalWrite(seg[5],LOW);
+      digitalWrite(seg[6],HIGH);
+      break;
+
     case 1:
-    digitalWrite(0 + i,HIGH);
-    digitalWrite(1 + i,LOW);
-    digitalWrite(2 + i,LOW);
-    digitalWrite(3 + i,HIGH);
-    digitalWrite(4 + i,HIGH);
-    digitalWrite(5 + i,HIGH);
-    digitalWrite(6 + i,HIGH);
-    break;
+      digitalWrite(seg[0],HIGH);
+      digitalWrite(seg[1],LOW);
+      digitalWrite(seg[2],LOW);
+      digitalWrite(seg[3],HIGH);
+      digitalWrite(seg[4],HIGH);
+      digitalWrite(seg[5],HIGH);
+      digitalWrite(seg[6],HIGH);
+      break;
 
     case 2:
-    digitalWrite(0 + i,LOW);
-    digitalWrite(1 + i,LOW);
-    digitalWrite(2 + i,HIGH);
-    digitalWrite(3 + i,LOW);
-    digitalWrite(4 + i,LOW);
-    digitalWrite(5 + i,HIGH);
-    digitalWrite(6 + i,LOW);
-    break;
+      digitalWrite(seg[0],LOW);
+      digitalWrite(seg[1],LOW);
+      digitalWrite(seg[2],HIGH);
+      digitalWrite(seg[3],LOW);
+      digitalWrite(seg[4],LOW);
+      digitalWrite(seg[5],HIGH);
+      digitalWrite(seg[6],LOW);
+      break;
 
     case 3:
-    digitalWrite(0 + i,LOW);
-    digitalWrite(1 + i,LOW);
-    digitalWrite(2 + i,LOW);
-    digitalWrite(3 + i,LOW);
-    digitalWrite(4 + i,HIGH);
-    digitalWrite(5 + i,HIGH);
-    digitalWrite(6 + i,LOW);
-    break;
+      digitalWrite(seg[0],LOW);
+      digitalWrite(seg[1],LOW);
+      digitalWrite(seg[2],LOW);
+      digitalWrite(seg[3],LOW);
+      digitalWrite(seg[4],HIGH);
+      digitalWrite(seg[5],HIGH);
+      digitalWrite(seg[6],LOW);
+      break;
 
     case 4:
-    digitalWrite(0 + i,HIGH);
-    digitalWrite(1 + i,LOW);
-    digitalWrite(2 + i,LOW);
-    digitalWrite(3 + i,HIGH);
-    digitalWrite(4 + i,HIGH);
-    digitalWrite(5 + i,LOW);
-    digitalWrite(6 + i,LOW);
-    break;
+      digitalWrite(seg[0],HIGH);
+      digitalWrite(seg[1],LOW);
+      digitalWrite(seg[2],LOW);
+      digitalWrite(seg[3],HIGH);
+      digitalWrite(seg[4],HIGH);
+      digitalWrite(seg[5],LOW);
+      digitalWrite(seg[6],LOW);
+      break;
 
     case 5:
-    digitalWrite(0 + i,LOW);
-    digitalWrite(1 + i,HIGH);
-    digitalWrite(2 + i,LOW);
-    digitalWrite(3 + i,LOW);
-    digitalWrite(4 + i,HIGH);
-    digitalWrite(5 + i,LOW);
-    digitalWrite(6 + i,LOW);
-    break;
+      digitalWrite(seg[0],LOW);
+      digitalWrite(seg[1],HIGH);
+      digitalWrite(seg[2],LOW);
+      digitalWrite(seg[3],LOW);
+      digitalWrite(seg[4],HIGH);
+      digitalWrite(seg[5],LOW);
+      digitalWrite(seg[6],LOW);
+      break;
 
     case 6:
-    digitalWrite(0 + i,LOW);
-    digitalWrite(1 + i,HIGH);
-    digitalWrite(2 + i,LOW);
-    digitalWrite(3 + i,LOW);
-    digitalWrite(4 + i,LOW);
-    digitalWrite(5 + i,LOW);
-    digitalWrite(6 + i,LOW);
-    break;
+      digitalWrite(seg[0],LOW);
+      digitalWrite(seg[1],HIGH);
+      digitalWrite(seg[2],LOW);
+      digitalWrite(seg[3],LOW);
+      digitalWrite(seg[4],LOW);
+      digitalWrite(seg[5],LOW);
+      digitalWrite(seg[6],LOW);
+      break;
 
     case 7:
-    digitalWrite(0 + i,LOW);
-    digitalWrite(1 + i,LOW);
-    digitalWrite(2 + i,LOW);
-    digitalWrite(3 + i,HIGH);
-    digitalWrite(4 + i,HIGH);
-    digitalWrite(5 + i,LOW);
-    digitalWrite(6 + i,HIGH);
-    break;
+      digitalWrite(seg[0],LOW);
+      digitalWrite(seg[1],LOW);
+      digitalWrite(seg[2],LOW);
+      digitalWrite(seg[3],HIGH);
+      digitalWrite(seg[4],HIGH);
+      digitalWrite(seg[5],LOW);
+      digitalWrite(seg[6],HIGH);
+      break;
 
     case 8:
-    digitalWrite(0 + i,LOW);
-    digitalWrite(1 + i,LOW);
-    digitalWrite(2 + i,LOW);
-    digitalWrite(3 + i,LOW);
-    digitalWrite(4 + i,LOW);
-    digitalWrite(5 + i,LOW);
-    digitalWrite(6 + i,LOW);
-    break;
+      for(int i=0;i<7;i++) digitalWrite(seg[i],LOW);
+      break;
 
     case 9:
-    digitalWrite(0 + i,LOW);
-    digitalWrite(1 + i,LOW);
-    digitalWrite(2 + i,LOW);
-    digitalWrite(3 + i,LOW);
-    digitalWrite(4 + i,HIGH);
-    digitalWrite(5 + i,LOW);
-    digitalWrite(6 + i,LOW);
-    break;
+      digitalWrite(seg[0],LOW);
+      digitalWrite(seg[1],LOW);
+      digitalWrite(seg[2],LOW);
+      digitalWrite(seg[3],LOW);
+      digitalWrite(seg[4],HIGH);
+      digitalWrite(seg[5],LOW);
+      digitalWrite(seg[6],LOW);
+      break;
+  }
+}
 
-    case 0:
-    digitalWrite(0 + i,LOW);
-    digitalWrite(1 + i,LOW);
-    digitalWrite(2 + i,LOW);
-    digitalWrite(3 + i,LOW);
-    digitalWrite(4 + i,LOW);
-    digitalWrite(5 + i,LOW);
-    digitalWrite(6 + i,HIGH);
-    break;
+void clearDisplay() {
+  for (int i = 0; i < 7; i++) {
+    digitalWrite(seg1[i], HIGH);
+    digitalWrite(seg2[i], HIGH);
   }
 }
