@@ -1,8 +1,8 @@
 My Second Semester Digital Electronics project.
 
-Title: Smart Attendance System using Digital Counters + Face Recognition
+Title: Smart Attendance System using AI Face Recognition and IOT integration.
 
-Digital Electronics Part: Counters, registers, FSM for attendance logic
+Digital Electronics Part: 7 Segment Display, MicroControllers(ESP32)
 
 AI Part: Face recognition using a trained model
 
