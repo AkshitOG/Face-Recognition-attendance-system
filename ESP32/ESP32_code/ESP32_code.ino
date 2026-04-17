@@ -61,13 +61,13 @@ void loop() {
     int tens = (total/10)%10;
     for(int t = 0; t < 50; t++) {
 
-    display(0, ones);   // display 1
+    display(0, tens);   // display 1
     delay(2);
-    clearDisplay();
+    // clearDisplay();
 
-    display(1, tens);   // display 2
+    display(1, ones);   // display 2
     delay(2);
-    clearDisplay();
+    // clearDisplay();
   }
 }
 
