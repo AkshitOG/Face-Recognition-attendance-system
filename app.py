@@ -29,6 +29,7 @@ def test():
 
 @app.route("/total", methods=["GET"])
 def day_total():
+    print("API has been reached.")
     return f"{daily_total_count()}"
 
 @app.route("/")
@@ -39,4 +40,4 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
 
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True, use_reloader=False)

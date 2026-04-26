@@ -52,6 +52,8 @@ void loop() {
       {
         String total_str = http.getString();
         total = total_str.toInt();
+        Serial.print("Total: ");
+        Serial.println(total);
       }
       http.end();
     }
